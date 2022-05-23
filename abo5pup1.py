@@ -67,7 +67,6 @@ Pro_Tags = Tags.text_input('Tags', '')
 if productform.form_submit_button("upload"):
     update_product(Product_Entry_Timestamp=datetime.datetime.now(), Product_Name_en=Pro_nameen, 
                     Product_Name_ar=Pro_namear, Product_Category=Pro_category, 
-                    Product_subcategory=Pro_subcategory, 
                     Tags=Pro_Tags,Retail_outlet=Pro_Retail,
                     Product_price=0.00, Product_image_R_url=links)
     st.success("Updated")

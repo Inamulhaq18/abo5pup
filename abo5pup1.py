@@ -35,12 +35,12 @@ urllist=[]
 uploaded_files = Upload.file_uploader("Take Pictures or browse", type=["png","jpg","jpeg"], accept_multiple_files=True)
 for uploaded_file in uploaded_files:
      bytes_data = uploaded_file.read()
-     #st.write("filename:", uploaded_file.name)
-     #st.write(uploaded_file.name)
-     save_uploadedfile(uploaded_file)
-     s3.Bucket('abo5').upload_file(Filename=uploaded_file.name, Key=uploaded_file.name)
-     urllist.append(url+uploaded_file.name)
+     name=save_uploadedfile(uploaded_file)
+     st.write(name)
+     s3.Bucket('abo5').upload_file(Filename=name, Key=name)
+     urllist.append(url+name)
 links = ", ".join(urllist)
+st.write(links)
 
 #Select Category
 Pro_category = category.selectbox(
@@ -62,12 +62,10 @@ Pro_nameen = Productnameen. text_input('Product Name English', '')
 Pro_namear = productnamear.text_input('Product Name Arabic', '')
 Pro_Tags = Tags.text_input('Tags', '')
 
-
 #submit button
 if productform.form_submit_button("upload"):
     update_product(Product_Entry_Timestamp=datetime.datetime.now(), Product_Name_en=Pro_nameen, 
-                    Product_Name_ar=Pro_namear, Product_Category=Pro_category, 
-                    Tags=Pro_Tags,Retail_outlet=Pro_Retail,
+                    Product_Name_ar=Pro_namear, Product_Category=Pro_category,Tags=Pro_Tags,Retail_outlet=Pro_Retail,
                     Product_price=0.00, Product_image_R_url=links)
     st.success("Updated")
     st.balloons()

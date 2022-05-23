@@ -6,8 +6,7 @@ import mimetypes
 import s3fs
 import os
 import streamlit as st
-
-
+import datetime
 
 
 os.environ["AWS_DEFAULT_REGION"] = 'us-east-2'
@@ -24,8 +23,16 @@ s3 = boto3.resource(
 )
 
 def save_uploadedfile(uploadedfile):
-     with open(os.path.join(os.getcwd(),uploadedfile.name),"wb") as f:
+     name=str(datetime.datetime.now())
+     name=name.replace(".","")
+     name=name.replace(":","")
+     name=name.replace(" ","")
+
+     typeimage=((uploadedfile.type).replace("image/",""))
+     name=name+"."+str(typeimage)
+     st.write((name))
+     with open(os.path.join(os.getcwd(),name),"wb") as f:
          f.write(uploadedfile.getbuffer())
-     return st.success("Saved File:{} to tempDir".format(uploadedfile.name))
+     return(name)
 
 
